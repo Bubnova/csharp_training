@@ -17,9 +17,9 @@ namespace WebAddressbookTests
         [Test]
         public void ContactCreationTest()
         {
-            GoToHomePage();
-            Login(new AccountData("admin", "secret"));
-            InitNewContactCreation();
+            app.Navigator.GoToHomePage();
+            app.Auth.Login(new AccountData("admin", "secret"));
+            app.Contacts.InitNewContactCreation();
             ContactData contact = new ContactData("Ivan");
             contact.Lastname = "Ivanov";
             contact.Company = "SomeComp";
@@ -29,10 +29,10 @@ namespace WebAddressbookTests
             contact.Bday = "1";
             contact.Bmonth = "January";
             contact.Byear = "2000";
-            FillContactForm(contact);
-            SubmitContactCreation();
-            ReturnHomePage();
-            Logout();
+            app.Contacts.FillContactForm(contact);
+            app.Contacts.SubmitContactCreation();
+            app.Contacts.ReturnHomePage();
+         
         }
 
       
