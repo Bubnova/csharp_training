@@ -38,7 +38,7 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public ContactHelper Remove(int v)
+        public ContactHelper Remove()
         {
             SelectContact();
             RemoveContact();
@@ -49,7 +49,9 @@ namespace WebAddressbookTests
 
         public ContactHelper SelectContact()
         {
-            driver.FindElement(By.XPath("//td/input")).Click();
+
+            //driver.FindElement(By.Id("21")).Click();
+             driver.FindElement(By.XPath("//td/input")).Click();
             return this;
         }
 
