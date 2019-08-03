@@ -40,7 +40,7 @@ namespace WebAddressbookTests
 
         public ContactHelper Remove()
         {
-            SelectContact();
+            SelectContact( );
             RemoveContact();
             CloseAlertRemoveContact();
             //Assert.IsTrue(Regex.IsMatch(CloseAlertAndGetItsText(), "^Delete 1 addresses[\\s\\S]$"));
@@ -50,7 +50,6 @@ namespace WebAddressbookTests
         public ContactHelper SelectContact()
         {
 
-            //driver.FindElement(By.Id("21")).Click();
              driver.FindElement(By.XPath("//td/input")).Click();
             return this;
         }
@@ -77,24 +76,13 @@ namespace WebAddressbookTests
         }
         public ContactHelper FillContactForm(ContactData contact)
         {
-            driver.FindElement(By.Name("firstname")).Click();
-            driver.FindElement(By.Name("firstname")).Clear();
-            driver.FindElement(By.Name("firstname")).SendKeys(contact.Firstname);
-            driver.FindElement(By.Name("lastname")).Click();
-            driver.FindElement(By.Name("lastname")).Clear();
-            driver.FindElement(By.Name("lastname")).SendKeys(contact.Lastname);
-            driver.FindElement(By.Name("company")).Click();
-            driver.FindElement(By.Name("company")).Clear();
-            driver.FindElement(By.Name("company")).SendKeys(contact.Company);
-            driver.FindElement(By.Name("address")).Click();
-            driver.FindElement(By.Name("address")).Clear();
-            driver.FindElement(By.Name("address")).SendKeys(contact.Address);
-            driver.FindElement(By.Name("mobile")).Click();
-            driver.FindElement(By.Name("mobile")).Clear();
-            driver.FindElement(By.Name("mobile")).SendKeys(contact.Mobile);
-               driver.FindElement(By.Name("email")).Click();
-            driver.FindElement(By.Name("email")).Clear();
-            driver.FindElement(By.Name("email")).SendKeys(contact.Email);
+            Type(By.Name("firstname"), contact.Firstname);
+            Type(By.Name("lastname"), contact.Lastname);
+            Type(By.Name("company"), contact.Company);
+            Type(By.Name("address"), contact.Address);
+            Type(By.Name("mobile"), contact.Mobile);
+            Type(By.Name("email"), contact.Email);
+           
             //  driver.FindElement(By.Name("bday")).Click();
             //  new SelectElement(driver.FindElement(By.Name("bday"))).SelectByText(contact.Bday);
             //  driver.FindElement(By.XPath("//option[@value='1']")).Click();

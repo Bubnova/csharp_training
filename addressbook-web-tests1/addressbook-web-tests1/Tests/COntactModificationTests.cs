@@ -11,7 +11,7 @@ using OpenQA.Selenium.Support.UI;
 namespace WebAddressbookTests.Tests
 {
     [TestFixture]
-    public class ContactModificationTests : TestBase
+    public class ContactModificationTests : AuthTestBase
     {
         [Test]
 
@@ -20,9 +20,11 @@ namespace WebAddressbookTests.Tests
 
             ContactData newData = new ContactData("Humphrey");
             newData.Lastname = "Van Weiden";
-            newData.Company = "AnotherComp";
-            newData.Address = "AnotherAdr";
-            newData.Email = "NewEmail";
+            newData.Company = null;
+            newData.Address = null;
+            newData.Address = null;
+            newData.Email = null;
+            newData.Mobile = null;
             app.Contacts.Modify( 1, newData);
         }
 
