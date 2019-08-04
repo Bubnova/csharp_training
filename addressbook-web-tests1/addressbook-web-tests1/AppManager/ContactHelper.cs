@@ -12,9 +12,10 @@ namespace WebAddressbookTests
 {
    public class ContactHelper : HelperBase
     {
-               public ContactHelper(ApplicationManager manager): base (manager)
+        public string baseURL;
+        public ContactHelper(ApplicationManager manager, string baseURL) : base (manager)
         {
-          
+            this.baseURL = baseURL;
         }
 
         public ContactHelper Create(ContactData contact)
@@ -28,22 +29,51 @@ namespace WebAddressbookTests
 
         public ContactHelper Modify( int v, ContactData newData)
         {
-           // SelectContact();
+            if (driver.Url == baseURL
+                    && IsElementPresent(By.XPath("//img[@alt='Details']")))
+            {
+                //если найден, изменить
+                InitContactModification(v);
+                FillContactForm(newData);
+                SubmitContactModification();
+                ReturnHomePage();
+                return this;
+            }
+            //если не найден - создать новый
+            ContactData contact = new ContactData("Ivan");
+            InitNewContactCreation();
+            FillContactForm(contact);
+            SubmitContactCreation();
+            ReturnHomePage();
+            //изменить созданный
             InitContactModification(v);
             FillContactForm(newData);
             SubmitContactModification();
             ReturnHomePage();
-
-
             return this;
         }
 
         public ContactHelper Remove()
         {
-            SelectContact( );
+            if (driver.Url == baseURL
+                  && IsElementPresent(By.XPath("//img[@alt='Details']")))
+            {
+                //если найден - удалить
+                SelectContact();
+                RemoveContact();
+                CloseAlertRemoveContact();
+                return this;
+             }
+            //если не найден - создать новый 
+            ContactData contact = new ContactData("Ivan");
+            InitNewContactCreation();
+            FillContactForm(contact);
+            SubmitContactCreation();
+            ReturnHomePage();
+            //удалить созданный
+            SelectContact();
             RemoveContact();
             CloseAlertRemoveContact();
-            //Assert.IsTrue(Regex.IsMatch(CloseAlertAndGetItsText(), "^Delete 1 addresses[\\s\\S]$"));
             return this;
         }
 
@@ -62,8 +92,9 @@ namespace WebAddressbookTests
 
         public ContactHelper RemoveContact()
         {
-            driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
-            return this;
+          driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
+          return this;
+
         }
 
        
@@ -83,16 +114,7 @@ namespace WebAddressbookTests
             Type(By.Name("mobile"), contact.Mobile);
             Type(By.Name("email"), contact.Email);
            
-            //  driver.FindElement(By.Name("bday")).Click();
-            //  new SelectElement(driver.FindElement(By.Name("bday"))).SelectByText(contact.Bday);
-            //  driver.FindElement(By.XPath("//option[@value='1']")).Click();
-            //  driver.FindElement(By.Name("bmonth")).Click();
-            //  new SelectElement(driver.FindElement(By.Name("bmonth"))).SelectByText(contact.Bmonth);
-            //  driver.FindElement(By.XPath("//option[@value='January']")).Click();
-            //  driver.FindElement(By.Name("byear")).Click();
-            //  driver.FindElement(By.Name("byear")).Clear();
-            //  driver.FindElement(By.Name("byear")).SendKeys(contact.Byear);
-            return this;
+              return this;
         }
         public ContactHelper SubmitContactCreation()
         {

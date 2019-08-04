@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
@@ -11,30 +12,65 @@ namespace WebAddressbookTests
 {
     public class GroupHelper:HelperBase
     {
-      
-        public GroupHelper (ApplicationManager manager): base (manager)
+        public string baseURL;
+        public GroupHelper (ApplicationManager manager, string baseURL) : base (manager)
         {
-          
+            this.baseURL = baseURL;
         }
 
-        public GroupHelper Remove(int p)
+        public GroupHelper Remove (int p)
         {
             manager.Navigator.GoToGroupsPage();
+            if (driver.Url == baseURL + "group.php"
+                 && IsElementPresent(By.XPath("//input[@name='selected[]']")))
+            {
+                //если найден, то удалить
+                SelectGroup(p);
+                RemoveGroup();
+                ReturnToGroupsPage();
+                return this;
+            }
+            //если не найден, то создать            
+            GroupData group = new GroupData("ccc");
+            InitNewGroupCreation();
+            FillGroupForm(group);
+            SubmitGroupCreation();
+            ReturnToGroupsPage();
+
+            //удалить созданный           
             SelectGroup(p);
             RemoveGroup();
             ReturnToGroupsPage();
             return this;
         }
 
-        public GroupHelper Modify(int p, GroupData newData)
+        public GroupHelper Modify (int p, GroupData newData)
         {
             manager.Navigator.GoToGroupsPage();
+            if (driver.Url == baseURL + "group.php"
+                 && IsElementPresent(By.XPath("//input[@name='selected[]']")))
+            {
+                //если найден, то изменить
+                SelectGroup(p);
+                InitGroupModification();
+                FillGroupForm(newData);
+                SubmitGroupModification();
+                ReturnToGroupsPage();
+                return this;
+            }
+            //если не найден, то создать
+            GroupData group = new GroupData("ccc");
+            InitNewGroupCreation();
+            FillGroupForm(group);
+            SubmitGroupCreation();
+            ReturnToGroupsPage();
+
+            //изменить 
             SelectGroup(p);
             InitGroupModification();
             FillGroupForm(newData);
             SubmitGroupModification();
             ReturnToGroupsPage();
-
             return this;
         }
 

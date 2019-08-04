@@ -30,8 +30,8 @@ namespace WebAddressbookTests
            
             loginHelper = new LoginHelper(this);
             navigator = new NavigationHelper(this, baseURL);
-            groupHelper = new GroupHelper(this);
-            contactHelper = new ContactHelper(this);
+            groupHelper = new GroupHelper(this, baseURL);
+            contactHelper = new ContactHelper(this, baseURL);
         }
 
          ~ApplicationManager()
