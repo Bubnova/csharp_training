@@ -29,23 +29,7 @@ namespace WebAddressbookTests
 
         public ContactHelper Modify( int v, ContactData newData)
         {
-            if (driver.Url == baseURL
-                    && IsElementPresent(By.XPath("//img[@alt='Details']")))
-            {
-                //если найден, изменить
-                InitContactModification(v);
-                FillContactForm(newData);
-                SubmitContactModification();
-                ReturnHomePage();
-                return this;
-            }
-            //если не найден - создать новый
-            ContactData contact = new ContactData("Ivan");
-            InitNewContactCreation();
-            FillContactForm(contact);
-            SubmitContactCreation();
-            ReturnHomePage();
-            //изменить созданный
+        
             InitContactModification(v);
             FillContactForm(newData);
             SubmitContactModification();
