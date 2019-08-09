@@ -20,7 +20,15 @@ namespace WebAddressbookTests.Tests
             [Test]
             public void ContactRemovalTest()
             {
+            //prepare
+            if (!app.Contacts.IsContactExists())
+            {
+                ContactData contact = new ContactData("Ivan");
+                app.Contacts.Create(contact);               
+            }
+            //action
                 app.Contacts.Remove();
+
             }
 
         }

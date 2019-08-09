@@ -53,24 +53,16 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public bool IsContactExists ()
+        {
+            return (driver.Url == baseURL
+                 && IsElementPresent(By.XPath("//img[@alt='Details']")));
+
+        }
+
+
         public ContactHelper Remove()
         {
-            if (driver.Url == baseURL
-                  && IsElementPresent(By.XPath("//img[@alt='Details']")))
-            {
-                //если найден - удалить
-                SelectContact();
-                RemoveContact();
-                CloseAlertRemoveContact();
-                return this;
-             }
-            //если не найден - создать новый 
-            ContactData contact = new ContactData("Ivan");
-            InitNewContactCreation();
-            FillContactForm(contact);
-            SubmitContactCreation();
-            ReturnHomePage();
-            //удалить созданный
             SelectContact();
             RemoveContact();
             CloseAlertRemoveContact();
@@ -95,9 +87,7 @@ namespace WebAddressbookTests
           driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
           return this;
 
-        }
-
-       
+        }       
 
         public ContactHelper InitNewContactCreation()
 

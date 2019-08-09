@@ -17,7 +17,13 @@ namespace WebAddressbookTests.Tests
 
      public void ContactModificationTest()
         {
-
+            //prepare
+            if (!app.Contacts.IsContactExists())
+            {
+                ContactData contact = new ContactData("Ivan");
+                app.Contacts.Create(contact);
+            }
+            //action
             ContactData newData = new ContactData("Humphrey");
             newData.Lastname = "Van Weiden";
             newData.Company = null;

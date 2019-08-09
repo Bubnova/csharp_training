@@ -18,26 +18,17 @@ namespace WebAddressbookTests
             this.baseURL = baseURL;
         }
 
+        public bool IsGroupExists ()
+        {
+            manager.Navigator.GoToGroupsPage();
+            return (driver.Url == baseURL + "group.php"
+                             && IsElementPresent(By.XPath("//input[@name='selected[]']")));
+
+        }
+
         public GroupHelper Remove (int p)
         {
             manager.Navigator.GoToGroupsPage();
-            if (driver.Url == baseURL + "group.php"
-                 && IsElementPresent(By.XPath("//input[@name='selected[]']")))
-            {
-                //если найден, то удалить
-                SelectGroup(p);
-                RemoveGroup();
-                ReturnToGroupsPage();
-                return this;
-            }
-            //если не найден, то создать            
-            GroupData group = new GroupData("ccc");
-            InitNewGroupCreation();
-            FillGroupForm(group);
-            SubmitGroupCreation();
-            ReturnToGroupsPage();
-
-            //удалить созданный           
             SelectGroup(p);
             RemoveGroup();
             ReturnToGroupsPage();
@@ -47,25 +38,6 @@ namespace WebAddressbookTests
         public GroupHelper Modify (int p, GroupData newData)
         {
             manager.Navigator.GoToGroupsPage();
-            if (driver.Url == baseURL + "group.php"
-                 && IsElementPresent(By.XPath("//input[@name='selected[]']")))
-            {
-                //если найден, то изменить
-                SelectGroup(p);
-                InitGroupModification();
-                FillGroupForm(newData);
-                SubmitGroupModification();
-                ReturnToGroupsPage();
-                return this;
-            }
-            //если не найден, то создать
-            GroupData group = new GroupData("ccc");
-            InitNewGroupCreation();
-            FillGroupForm(group);
-            SubmitGroupCreation();
-            ReturnToGroupsPage();
-
-            //изменить 
             SelectGroup(p);
             InitGroupModification();
             FillGroupForm(newData);
